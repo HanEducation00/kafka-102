@@ -1,6 +1,6 @@
 ### Kafka'da Standalone ve Distributed Çalışma Modları
--Standalone mod, Kafka'nın tek bir sunucu üzerinde çalıştırıldığı basit yapılandırmadır:
--Distributed mod, Kafka'nın birden fazla sunucu üzerinde çalıştırıldığı ve bir küme (cluster) oluşturduğu yapıdır:
+- Standalone mod, Kafka'nın tek bir sunucu üzerinde çalıştırıldığı basit yapılandırmadır:
+- Distributed mod, Kafka'nın birden fazla sunucu üzerinde çalıştırıldığı ve bir küme (cluster) oluşturduğu yapıdır:
 
 
 ### Kafka stondole mod config dosyası
