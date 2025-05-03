@@ -14,9 +14,9 @@ connect-distributed.properties     connect-log4j.properties        consumer.prop
 
 #### 1. Server Basics
 * broker.id=0
-- Bu Kafka broker'ının benzersiz ID’si.
-- Her broker’ın ID’si farklı olmalı (cluster içinde).
-- Örnek: Eğer 3 broker varsa, broker.id=0, broker.id=1, broker.id=2 gibi.
+Bu Kafka broker'ının benzersiz ID’si.
+Her broker’ın ID’si farklı olmalı (cluster içinde).
+Örnek: Eğer 3 broker varsa, broker.id=0, broker.id=1, broker.id=2 gibi.
 
 #### 2. Socket Server Settings
 * listeners=PLAINTEXT://:9092 (yorum satırı)
