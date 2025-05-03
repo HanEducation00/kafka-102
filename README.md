@@ -21,25 +21,35 @@ connect-distributed.properties     connect-log4j.properties        consumer.prop
 * Örnek: Eğer 3 broker varsa, broker.id=0, broker.id=1, broker.id=2 gibi.
 
 #### 2. Socket Server Settings
-* listeners=PLAINTEXT://:9092 (yorum satırı)
+```
+listeners=PLAINTEXT://:9092 (yorum satırı)
+```
 * Broker’ın hangi IP ve port üzerinden dinleme yapacağını belirtir.
 * Aktif olsaydı: PLAINTEXT://0.0.0.0:9092 şeklinde tüm arayüzlerden dinleyebilirdi.
+  
 
-* advertised.listeners=PLAINTEXT://your.host.name:9092 (yorum satırı)
+```
+advertised.listeners=PLAINTEXT://your.host.name:9092 (yorum satırı)
+```
 * Dışarıya (client'lara) kendisini nasıl tanıtacağı.
 * Örneğin dış IP ya da DNS adıyla belirtilir.
 * Cloud veya Docker ortamında mutlaka set edilmelidir, yoksa client bağlanamaz.
 
-* listener.security.protocol.map (yorum satırı)
+```
+listener.security.protocol.map (yorum satırı)
+```
 * Listener’lar için hangi güvenlik protokolünün kullanılacağını tanımlar (PLAINTEXT, SSL, SASL).
 * Aktif değil ama SSL/SASL kullanacaksan gereklidir.
 
-* num.network.threads=3
+```
+num.network.threads=3
+```
 * Ağ üzerinden gelen istekleri dinlemek için kaç thread kullanılacak.
 
-* num.io.threads=8
+```
+num.io.threads=8
+```
 * Disk erişimi gibi I/O işlemleri için kullanılacak thread sayısı.
-
 * Eğer aynı anda:
 * 50 farklı microservice Kafka’ya veri gönderiyorsa (producer),
 * 20 farklı consumer grup veri okuyorsa,
@@ -54,38 +64,57 @@ connect-distributed.properties     connect-log4j.properties        consumer.prop
 * Çok fazla client aynı anda bağlanıyorsa → network.threads ↑
 * Çok sayıda topic/partition varsa veya disk işlemleri yoğunsa → io.threads ↑
 * Yük arttıkça bu sayılar artırılabilir.
-
-* socket.send.buffer.bytes=102400
+  
+```
+socket.send.buffer.bytes=102400
+```
 * Socket çıkış buffer’ı (gönderme).
 * Network optimizasyonları için önemli olabilir.
 
+```
 * socket.receive.buffer.bytes=102400
+```
 * Socket giriş buffer’ı (alma).
-
-* socket.request.max.bytes=104857600
+  
+```
+socket.request.max.bytes=104857600
+```
 * Kafka’nın kabul edebileceği en büyük istek boyutu (100 MB).
 * Büyük mesajlar göndereceksen bu değeri artırmalısın.
 
 #### 3. Log Basics
-* log.dirs=/tmp/kafka-logs
+```
+log.dirs=/tmp/kafka-logs
+```
 * Kafka'nın verilerini yazdığı klasör(ler).
 * Çok disk varsa virgülle ayırarak yazılabilir.
 
-* num.partitions=1
+```
+num.partitions=1
+```
 * Her yeni topic için varsayılan partition sayısı.
 * Daha yüksek değerler paralel okuma/yazma sağlar.
 
-* num.recovery.threads.per.data.dir=1
+```
+num.recovery.threads.per.data.dir=1
+```
 * Her veri klasörü için başlangıçta kurtarma/temizleme için kaç thread kullanılacağı.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #### 4. Internal Topic Settings
-* offsets.topic.replication.factor=1
+```
+offsets.topic.replication.factor=1
+```
 * __consumer_offsets iç topic'inin replikasyon faktörü.
 * Üretimde en az 3 olması önerilir.
 
-* transaction.state.log.replication.factor=1
-__transaction_state için replikasyon sayısı.
-* transaction.state.log.min.isr=1
+```
+transaction.state.log.replication.factor=1
+```
+* __transaction_state için replikasyon sayısı.
+
+```
+transaction.state.log.min.isr=1
+```
 * Minimum in-sync replica (ISR) sayısı.
 * Replikasyon için güvenlik eşiğidir.
 
@@ -93,12 +122,15 @@ __transaction_state için replikasyon sayısı.
 #### 5. Log Flush Policy (Yorum Satırları)
 * fsync (file sync), bir verinin diskte fiziksel olarak yazıldığından emin olmak için kullanılan bir sistem çağrısıdır.
   
+```
 * log.flush.interval.messages
+```
 - Kaç mesajdan sonra disk'e fsync yapılacağı.
 
-* log.flush.interval.ms
+```
+log.flush.interval.ms
+```
 - Belirli bir süre geçtiğinde fsync yapılır.
-
 - log.flush.interval.messages=10000: 10.000 mesajda bir fsync.
 - log.flush.interval.ms=1000: 1 saniyede bir fsync.
 
@@ -108,29 +140,43 @@ __transaction_state için replikasyon sayısı.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #### 6. Log Retention Policy
-* log.retention.hours=168
+```
+log.retention.hours=168
+```
 * Log segmentleri 7 gün sonra silinir.
 
-* log.retention.bytes=... (yorum satırı)
+```
+log.retention.bytes=... (yorum satırı)
+```
 * Belirtilirse, log boyutu belli eşiği aşarsa eski segmentler silinir.
 
-* log.segment.bytes=... (yorum satırı)
+```
+log.segment.bytes=... (yorum satırı)
+```
 * Bir log segmenti maksimum bu boyuta ulaşınca yeni segment oluşturulur.
 
-* log.retention.check.interval.ms=300000
-* Kafka, eski segmentleri 5 dakikada bir kontrol eder.
+```
+log.retention.check.interval.ms=300000
+```
+*Kafka, eski segmentleri 5 dakikada bir kontrol eder.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #### 7. Zookeeper Ayarları
-* zookeeper.connect=localhost:2181
+```
+zookeeper.connect=localhost:2181
+```
 * Kafka'nın bağlantı kuracağı Zookeeper adresi.
 
-* zookeeper.connection.timeout.ms=18000
+```
+zookeeper.connection.timeout.ms=18000
+```
 * Kafka'nın Zookeeper'a bağlanmak için bekleyeceği maksimum süre.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #### 8. Group Coordinator Settings
-* group.initial.rebalance.delay.ms=0
+```
+group.initial.rebalance.delay.ms=0
+```
 * Consumer grubu başladığında rebalancing işlemini geciktirme süresi (0 ms).
 * Geliştirme için uygundur.
 * Üretimde 3000 ms gibi bir değer daha güvenlidir.
