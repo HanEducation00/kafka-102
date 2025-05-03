@@ -3,8 +3,6 @@
 - Distributed mod, Kafka'nın birden fazla sunucu üzerinde çalıştırıldığı ve bir küme (cluster) oluşturduğu yapıdır:
 
 ----------------------------------------------------------------------------------------------------------------------------
-
-### 1- JMX Exporter JAR Dosyasını İndirin
 ### Kafka stondole mod config dosyası
 ```
 ubuntu@ip-172-31-21-179:~/kafka/kafka_2.13-3.8.0/config$ ls
